@@ -1,0 +1,27 @@
+module.exports = {
+    kafka: {
+      'metadata.broker.list': 'xxxx',
+      'sasl.username': 'xxxx',
+      'sasl.password': 'xxxx',
+      'security.protocol': 'sasl_ssl',
+      'sasl.mechanisms': 'PLAIN',
+      'group.id': 'node-group'
+    },
+    app: {
+      port: 3000
+    },
+    db: {
+      dialect: 'mysql',
+      host: 'sxxxx',
+      username: 'frxxxx',
+      password: 'xxxx',
+      database: 'xxxx'
+    },
+    elasticsearch:{
+      node: 'xxxx',
+      username: 'xxxxx',
+      password: 'xxxxxxxx'
+    }
+  };
+
+  //port : 3306
