@@ -4,27 +4,17 @@ const Message = require('./db');
 // const elasticsearch = require('elasticsearch');
 const { Client } = require('@elastic/elasticsearch');
 
-// const client = new elasticsearch.Client({
-//   host: '',
-//   auth: {
-//     username: '',
-//     password: ''
-//   },
-//   log: 'error'
-// });
-
 const client = new Client({
-  node: config.elasticsearch.node,
-  auth: {
-    username: config.elasticsearch.username,
-    password: config.elasticsearch.password
+  cloud :{
+      id: config.elasticsearch.cloud_id
   },
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/vnd.elasticsearch+json; compatible-with=8'
   },
-  ssl: {
-    rejectUnauthorized: false
-  }
+auth: {
+  username: config.elasticsearch.username,
+  password: config.elasticsearch.password
+}
 });
 
 
@@ -61,42 +51,21 @@ consumer.on('data', async (data) => {
   } else if (message.topic === 'success') {
 
     // Store data in ElasticSearch    
-    const indexName = 'myindex';
-
-    // const esMessage = {
-    //   index: indexName,
-    //   body: message
-    // };
-
-    const data = {
-      name: 'John Doe',
-      email: 'john.doe@example.com'
+    const indexName = 'test3';
+      const esMessage = {
+      index: indexName,
+      body: message
     };
     
-
-    const esMessage = {
-      index: 'myindex',
-      body: data
-    };
-    
-
     try {
-      await client.index(esMessage, (err, res, status) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(res);
-        }
-      });
-      console.log(`Message stored in ElasticSearch for Success topic: ${JSON.stringify(esMessage)}`);
-
+      let res = {};
+      res = await client.index(esMessage);
+      
+      console.log("Success Message stored in ElasticSearch for Success topic:", res);
     } catch (error) {
-      console.error(`Failed to store message in ElasticSearch: ${error}`);
+      console.error(`Error : success to store message in ElasticSearch: ${error}`);
     }
-
-
   }
 });
-
 
 module.exports = consumer;

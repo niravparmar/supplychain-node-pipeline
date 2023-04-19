@@ -18,7 +18,7 @@ module.exports = {
       database: 'xxxx'
     },
     elasticsearch:{
-      node: 'xxxx',
+      cloud_id: 'xxxx',
       username: 'xxxxx',
       password: 'xxxxxxxx'
     }

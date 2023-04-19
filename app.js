@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+require('dotenv').config()
 const config = require('./config');
 const routes = require('./routes');
 const producer = require('./producer');
